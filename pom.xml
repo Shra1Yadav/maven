@@ -1,69 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>maven-project</artifactId>
+    <!-- This is often your domain name (reversed.)  -->
+    <groupId>com.yourorganization</groupId>
+    <!-- The name of this project (actually, the name of the artifact, which is the thing that this project produces. A jar in this case.) -->
+    <artifactId>javaparser-maven-sample</artifactId>
+    <!-- The version of this project. SNAPSHOT means "we're still working on it" -->
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-
-    <name>python-app</name>
-    <description>Sample Java project (replace with your actual app description)</description>
 
     <properties>
+        <!-- Tell Maven we want to use Java 8 -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- Tell Maven to treat all source files as UTF-8 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <build>
-        <plugins>
-            <!-- Compiler Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
-            </plugin>
-
-            <!-- Surefire Plugin (for tests) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
-            </plugin>
-
-            <!-- (Optional) Shade Plugin if you're building an executable JAR -->
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals><goal>shade</goal></goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-        </plugins>
-    </build>
-
-    <!-- Dependencies (add your actual project dependencies here) -->
     <dependencies>
-        <!-- Example: JUnit for testing -->
+        <!-- Here are all your dependencies. Currently only one. These are automatically downloaded from https://mvnrepository.com/ -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
+            <groupId>com.github.javaparser</groupId>
+            <artifactId>javaparser-core</artifactId>
+            <version>3.27.0</version>
         </dependency>
     </dependencies>
 
+    <!-- This blob of configuration tells Maven to make the jar executable. You can run it with:
+    mvn clean package
+    java -jar target/javaparser-maven-sample-1.0-SNAPSHOT-shaded.jar
+    -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>com.yourorganization.maven_sample.LogicPositivizer</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -4,13 +4,13 @@
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>python-app</artifactId>
+    <groupId>com.example.maven-project</groupId>
+    <artifactId>maven-project</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
-    <name>python-app</name>
-    <description>Sample Java project (replace with your actual app description)</description>
+    <packaging>pom</packaging>
+    <name>Maven Project</name>
+    <description>Sample Maven project with a working, deployable site.</description>
+    <url>http://www.example.com</url>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
